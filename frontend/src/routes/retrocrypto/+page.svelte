@@ -8,7 +8,7 @@
     }
   
       async function send_data(data){
-          const res = await fetch('http://127.0.0.1:5000/api/items', {
+          const res = await fetch('http://127.0.0.1:4000/api/items', {
               method: 'POST',
               headers: {
             'Content-Type': 'application/json',
@@ -155,6 +155,9 @@
       border: none;
       border-bottom: 1px solid #2CB67D;
   background-color: #F2F4F6;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 24px;
     }
     input:focus{
       outline: 0;

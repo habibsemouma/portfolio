@@ -6,9 +6,9 @@ export let data
 
 
 <nav id="navbar">
-    <a href="/"><img alt='dummy text' src="navbaricons/home.png"></a>
-    <a href="/retrocrypto"><img alt='dummy text' src="navbaricons/retrocrypto.png"></a>
-    <a href="/ytbmp3">ytbmp3</a>
+    <a href="/"><img class="navicon" alt='dummy text' src="navbaricons/home.png"></a>
+    <a href="/retrocrypto"><img class="navicon" alt='dummy text' src="navbaricons/retrocrypto.png"></a>
+    <a href="/ytbmp3"><img class="navicon" alt='dummy text' src="navbaricons/ytbmp3.png"></a>
   </nav>
   {#key data.url}
   <div
@@ -31,11 +31,15 @@ export let data
     align-items: center;
     font-size: 24px;
     font-weight: bolder;
-    display: flex;
     gap:5px;
+
   }
   a{
     color:white;
     text-decoration: none;
+  }
+  .navicon:hover{
+    transform: scale(1.2);
+    transition: all 0.5s;
   }
   </style>
