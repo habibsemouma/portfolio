@@ -2,3 +2,4 @@ yt_dlp
 flask
 apscheduler
 flask_cors
+gunicorn

@@ -17,4 +17,4 @@ def get_url():
     return send_file(filename[7:],as_attachment=True,download_name=video_title)
 
 if __name__ == '__main__':
-    app.run(port=3000)
+    app.run(host="0.0.0.0")

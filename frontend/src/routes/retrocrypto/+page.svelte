@@ -8,7 +8,7 @@
     }
   
       async function send_data(data){
-          const res = await fetch('http://retrocrypto/api/items', {
+          const res = await fetch('http://localhost:4000/api/items', {
               method: 'POST',
               headers: {
             'Content-Type': 'application/json',
