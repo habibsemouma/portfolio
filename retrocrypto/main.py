@@ -3,7 +3,7 @@ from flask_cors import CORS
 from utils import *
 
 app = Flask(__name__)
-CORS(app, origins='http://localhost:5173')
+CORS(app, origins='http://portfolio:8080')
 @app.route('/api/items', methods=['GET','POST'])
 def get_items():
     data=request.json

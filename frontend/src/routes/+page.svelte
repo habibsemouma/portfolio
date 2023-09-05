@@ -135,7 +135,7 @@
         <div class="grid grid-cols-2 gap-8">
             <i class="fa fa-envelope"><a href="mailto:habibsemouma@gmail.com"> habibsemouma@gmail.com</a> </i>
             <i class="fa fa-phone"><a href="tel:+213557369874"> +213557369874</a></i>
-            <i class="fa fa-linkedin"><a href="www.linkedin.com/in/habib-semouma-0502b1177"> Linkedin Profile</a></i>
+            <i class="fa fa-linkedin"><a href="https://www.linkedin.com/in/habib-semouma-0502b1177"> Linkedin Profile</a></i>
             <i class="fa fa-github"><a href="https://github.com/habibsemouma"> Github link</a></i>
 
         </div>

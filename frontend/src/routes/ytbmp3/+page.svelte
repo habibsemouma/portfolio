@@ -8,7 +8,7 @@
     document.getElementById("dl_button").disabled=true;
     const url = document.getElementById("url").value;
     const data = { url: url };
-    const response = await fetch("http://127.0.0.1:3000/audio", {
+    const response = await fetch("http://ytbmp3/audio", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

@@ -1,16 +1,15 @@
+FROM node:18-slim AS build
 
-FROM node:18-slim
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install
-
+WORKDIR /app
 COPY . .
 
 RUN npm run build
 
-EXPOSE 6000
+FROM nginx:alpine AS deploy-static
 
-CMD [ "npm", "start" ]
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+
+COPY --from=build /app/build .
+ENTRYPOINT [ "nginx","-g","daemon off;" ]
