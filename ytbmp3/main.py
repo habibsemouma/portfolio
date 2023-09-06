@@ -6,7 +6,7 @@ from utils import *
 scheduler = BackgroundScheduler(daemon=True)
 scheduler.start()
 app = Flask(__name__)
-CORS(app, origins='http://portfolio:8080')
+CORS(app, origins='*')
 @app.route('/audio', methods=['GET','POST'])
 def get_url():
     data=request.json
