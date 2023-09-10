@@ -1,4 +1,5 @@
 <script>
+    import {PUBLIC_YTBMP3_URL} from "$env/static/public";
   import { Body } from "svelte-body";
   let file_ready=false;
   let file_url=undefined;
@@ -8,7 +9,7 @@
     document.getElementById("dl_button").disabled=true;
     const url = document.getElementById("url").value;
     const data = { url: url };
-    const response = await fetch("http://localhost:3000/audio", {
+    const response = await fetch(PUBLIC_YTBMP3_URL, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

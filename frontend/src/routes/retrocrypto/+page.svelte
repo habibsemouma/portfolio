@@ -1,14 +1,14 @@
 <script>
+  import {PUBLIC_RETROCRYPTO_URL} from "$env/static/public";
   import {Body} from 'svelte-body'
     export let current_encoding = "Choose an encoding";
     export let output_text="";
-  
     function change_encoding(encoding) {
       current_encoding = encoding;
     }
   
       async function send_data(data){
-          const res = await fetch('http://localhost:4000/traditional', {
+          const res = await fetch(PUBLIC_RETROCRYPTO_URL, {
               method: 'POST',
               headers: {
             'Content-Type': 'application/json',
