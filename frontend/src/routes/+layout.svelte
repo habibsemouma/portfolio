@@ -10,7 +10,7 @@ export let data
 <nav id="navbar">
     <a href="/"><img class="navicon" alt='dummy text' src="navbaricons/home.png"></a>
     <a href="/retrocrypto"><img class="navicon" alt='dummy text' src="navbaricons/retrocrypto.png"></a>
-    <a href="/ytbmp3"><img class="navicon" alt='dummy text' src="navbaricons/ytbmp3.png"></a>
+    <a href="/retrocrypto">selftrack</a>
   </nav>
   {#key data.url}
   <div

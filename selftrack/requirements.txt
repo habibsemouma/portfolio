@@ -1,0 +1,5 @@
+Celery
+flask
+flask_cors
+mega.py
+pandas

@@ -24,13 +24,3 @@ services:
     networks:
       portfolio_net:
         ipv4_address: 172.168.0.20
-
-
-  ytbmp3:
-    build:
-      context: ./ytbmp3
-    ports:
-      - "3000:3000"
-    networks:
-      portfolio_net:
-        ipv4_address: 172.168.0.30
