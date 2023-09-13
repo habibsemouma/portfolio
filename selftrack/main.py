@@ -32,10 +32,9 @@ def exporter():
 
     return jsonify(data)
 
-#scheduler.add_job(importer, 'cron', hour=0, minute=0, second=0)
+scheduler.add_job(importer, 'cron', hour=0, minute=0, second=0)
 
-#scheduler.start()
+scheduler.start()
 
 if __name__ == '__main__':
-    importer()
-    #app.run(host="0.0.0.0",port=7000)
+    app.run(host="0.0.0.0",port=7000)
