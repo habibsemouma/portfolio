@@ -1,38 +1,15 @@
-from flask import Flask, jsonify,request
-from flask_cors import CORS
-from utils import *
-from werkzeug.utils import secure_filename
-import os
-from mega import Mega
-from apscheduler.schedulers.background import BackgroundScheduler as scheduler
-
-app = Flask(__name__)
-CORS(app, origins='*')
-app.config['UPLOAD_FOLDER'] = "./data"
-
-email = os.environ.get("email")
-password = os.environ.get("password")
-mega=Mega()
-m = mega.login(email, password)
-current_files=os.listdir("data")
-
-def importer():
-    folder_node = m.find("selftrack")
-    files = m.get_files_in_node(folder_node[0])
-    for record in files:
-        filename = files[record]['a']['n']
-        if filename not in current_files:
-            downloadable=m.find(filename)
-            m.download(downloadable,"data")
+from utils.app import *
 
 
 @app.route('/exporter', methods=['GET'])
 def exporter():
-    data={}
-
+    activity=json.loads(open("cleaned/activity.json").read())
+    activity_by_app=json.loads(open("cleaned/activity_by_app.json").read())
+    check_count=json.loads(open("cleaned/check_count.json").read())
+    data={"activity":activity,"activity_by_app":activity_by_app,"check_count":check_count}
     return jsonify(data)
 
-scheduler.add_job(importer, 'cron', hour=0, minute=0, second=0)
+scheduler.add_job(importer, trigger=CronTrigger(hour=0, minute=0, second=0), id="midnight_job",replace_existing=True)
 
 scheduler.start()
 
