@@ -24,3 +24,13 @@ services:
     networks:
       portfolio_net:
         ipv4_address: 172.168.0.20
+
+  selftrack:
+    build:
+      context: ./selftrack
+    ports:
+      - "7000:7000"
+    networks:
+      portfolio_net:
+        ipv4_address: 172.168.0.30
+

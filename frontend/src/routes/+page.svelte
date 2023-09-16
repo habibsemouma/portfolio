@@ -78,27 +78,11 @@
                 <h1>Web scraping</h1>
             </div>
 
-            <div class="flex items-center justify-center">
-                <img alt="dummy text" class="border-2 rounded-full p-2 hover:bg-purple-700"
-                    src="images/datascience.png">
-            </div>
-
-            <div class="flex items-center justify-center">
-                <h1>Data science</h1>
-            </div>
 
         </div>
 
     </div>
     
-    <div class="bg-slate-800 gap-16 flex flex-col items-center justify-cente p-16">
-      <h1 class="font-bold text-lg">Some projects</h1>
-      <div class="border-b-2 border-green-50">
-        
-
-        
-      </div>
-    </div>
 
     <div class="bg-[#1A1A1A] gap-16 flex flex-col items-center justify-center p-16">
         <h1 class="font-bold text-lg">TECH STACK</h1>
