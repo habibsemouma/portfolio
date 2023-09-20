@@ -1,9 +1,9 @@
 FROM node:18-slim AS build
 
-WORKDIR /app
-COPY . .
+WORKDIR /frontend
+COPY package.json .
+COPY build ./build
+ENV PORT=5000
+EXPOSE 5000
 
-RUN npm install
-RUN npm run build
-
-ENTRYPOINT [ "npm","start" ]
+ENTRYPOINT ["node", "build/index.js" ]

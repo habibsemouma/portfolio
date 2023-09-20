@@ -18,11 +18,11 @@ app.config['UPLOAD_FOLDER'] = "./data"
 
 email = os.environ.get("email")
 password = os.environ.get("password")
-mega=Mega()
-m = mega.login(email, password)
 current_files=os.listdir("data")
 
 def importer():
+    mega=Mega()
+    m = mega.login(email, password)
     folder_node = m.find("selftrack")
     files = m.get_files_in_node(folder_node[0])
     for record in files:
