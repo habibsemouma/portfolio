@@ -34,6 +34,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
     networks:
       net:
         ipv4_address: 193.168.1.10
