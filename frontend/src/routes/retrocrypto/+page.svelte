@@ -1,6 +1,6 @@
 <script>
-  import {PUBLIC_RETROCRYPTO_URL} from "$env/static/public";
   import {Body} from 'svelte-body'
+  import axios from "axios"
     export let current_encoding = "Choose an encoding";
     export let output_text="";
     function change_encoding(encoding) {
@@ -8,19 +8,15 @@
     }
   
       async function send_data(data){
-          const res = await fetch(PUBLIC_RETROCRYPTO_URL, {
-              method: 'POST',
-              headers: {
-            'Content-Type': 'application/json',
-          },
-              body: JSON.stringify(data)
-          })
-          
-          const json = await res.json()
+        try{
+          const response = await axios.post("/api/retrocrypto",data)
   
-          output_text=json['text']
-          
-  
+          output_text=response.data['text']
+        }
+        catch (error){
+          console.log(error)
+
+        }
       }
     
   

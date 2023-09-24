@@ -5,3 +5,4 @@ mega.py
 pandas
 gunicorn
 apscheduler
+gevent

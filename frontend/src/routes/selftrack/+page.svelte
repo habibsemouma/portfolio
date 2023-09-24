@@ -1,6 +1,5 @@
 <script>
   import { Body } from "svelte-body";
-  import { PUBLIC_SELFTRACK_URL } from "$env/static/public";
   import { get_activity_options } from "./Activity.js";
   import { get_activity_app_options } from "./ActivityApp.js";
   import { get_check_count_options } from "./CheckCount.js";
@@ -16,15 +15,12 @@
   let activity_options;
 
   let activity_by_app_chart;
-  let activity_by_app = {};
   let activity_by_app_options;
 
   let check_count_chart;
-  let check_count = {};
   let check_count_options;
 
   let check_count_time_chart;
-  let check_count_time={};
   let check_count_time_options;
 
   function last_n_dates(dates, n_dates) {
@@ -68,27 +64,25 @@
   }
 
   onMount(async () => {
-    axios
-      .get(PUBLIC_SELFTRACK_URL)
-      .then(function (response) {
-        activity = response.data["activity"];
-        activity_options = get_activity_options(activity);
-        days = Object.keys(activity);
+    try {
+    const response = await axios.get("/api/selftrack");
+    const {
+        activity,
+        activity_by_app,
+        check_count,
+    } = response.data["transit_data"];
 
-        activity_by_app = response.data["activity_by_app"];
-        activity_by_app_options = get_activity_app_options(activity_by_app);
+    activity_options = get_activity_options(activity);
+    days = Object.keys(activity);
+    activity_by_app_options = get_activity_app_options(activity_by_app);
+    check_count_options = get_check_count_options(check_count);
+    check_count_time_options = get_check_count_time_options(check_count);
 
-        check_count = response.data["check_count"];
-        check_count_options = get_check_count_options(check_count);
+    data_loaded = true;
+} catch (error) {
+    console.error("Error:", error);
+}
 
-        check_count_time=response.data["check_count"]
-        check_count_time_options=get_check_count_time_options(check_count_time)
-
-        data_loaded = true;
-      })
-      .catch(function (error) {
-        console.error("Error:", error);
-      });
 
     const ApexCharts = (await import("apexcharts")).default;
 

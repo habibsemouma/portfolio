@@ -1,4 +1,5 @@
 export function get_check_count_time_options(check_count_time_data){
+  console.log(check_count_time_data)
     return({
         title: {
             text: "Screentime by days",
