@@ -10,8 +10,9 @@
       async function send_data(data){
         try{
           const response = await axios.post("/api/retrocrypto",data)
+          console.log(response)
   
-          output_text=response.data['text']
+          output_text=response.data['transit_data']['text']
         }
         catch (error){
           console.log(error)
@@ -41,7 +42,6 @@
           data['encodingtype']="vigenere"
           data['keyword']=document.getElementById("keyword").value
       }
-      console.log(data);
       send_data(data);
     }
   </script>

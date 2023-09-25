@@ -1,10 +1,14 @@
 import { json } from '@sveltejs/kit';
-import axios from "axios";
 
 export async function GET() {
     try {
-        const response = await axios.get("http://127.0.0.1:7000/exporter");
-        const transit_data = response.data;
+        const response = await fetch('http://193.168.1.40:7000/exporter');
+  
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+      
+        const transit_data = await response.json();
         
         return json({ transit_data });
     } catch (error) {

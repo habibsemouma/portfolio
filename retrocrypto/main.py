@@ -7,6 +7,8 @@ CORS(app, origins='*')
 @app.route('/traditional', methods=['GET','POST'])
 def get_items():
     data=request.json
+    print(data)
+    
     if data["encoding"]=="atbash":
         if data["type"]=="encode": response= {'text':atbash_encode(data["text"])}
         elif data["type"]=="decode": response= {'text':atbash_decode(data["text"])}
