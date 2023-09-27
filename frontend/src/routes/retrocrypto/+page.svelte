@@ -147,6 +147,7 @@
       border-radius: 2rem;
       color:white;
       font-size: 20px;
+      margin: 10px;
     }
     .handle:hover{
       transform: translateY(-5px);
@@ -158,17 +159,7 @@
     #decodebtn{
       background-color: red;
     }
-    #handles{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap:20px;
-    }
-    #docs{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+
     #dynamicoptions{
       display: flex;
       justify-content: center;
