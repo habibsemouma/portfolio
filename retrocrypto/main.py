@@ -1,15 +1,21 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,send_file
 from flask_cors import CORS
 from utils import *
+from werkzeug.utils import secure_filename
+import io
 
 app = Flask(__name__)
 CORS(app, origins="*")
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route("/traditional", methods=["GET", "POST"])
 def get_items():
     data = request.json
-    print(data)
 
     if data["encoding"] == "atbash":
         if data["type"] == "encode":
@@ -37,6 +43,24 @@ def get_items():
 
     return jsonify(response)
 
+app.route("/stenhide",methods=["POST"])
+def stendhide():
+    data = request.json
+    img=request.files['image']
+    if img and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+            
+    if data["type"] == "embed":
+        plaintext=data["plaintext"]
+        mod_img=embed_text(plaintext,img)
+        img_buffer=io.BytesIO()
+        img.save(img_buffer,format="png")
+        img_buffer.seek(0)
+        return send_file(img_buffer,mimetype="image/png")
+
+    elif data["type"]=="extract":
+        pass
+    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4000)

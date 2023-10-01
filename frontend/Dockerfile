@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-FROM node:18-alpine AS build
-=======
-FROM node:20-bullseye AS build
+FROM node:18-bullseye AS build
 RUN apt-get update && apt-get install -y --no-install-recommends curl
 ARG NPM_TOKEN
 WORKDIR /usr/src/app
 COPY . /usr/src/app/
->>>>>>> cdd07fc1ca8172751d37cdb9efceea4b076d1892
 
 RUN npm ci --omit=dev && \ 
     cp -R /usr/src/app/node_modules /usr/src/app/node_modules_prod && \
