@@ -1,4 +1,4 @@
-FROM node:18-slim AS build
+FROM node:18-alpine AS build
 
 WORKDIR /frontend
 COPY package.json .

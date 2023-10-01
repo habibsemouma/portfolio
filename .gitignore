@@ -16,3 +16,6 @@ vite.config.ts.timestamp-*
 data
 cleaned
 ssl
+glados
+deploy.sh
+upload.sh
