@@ -16,6 +16,10 @@ vite.config.ts.timestamp-*
 data
 cleaned
 ssl
+<<<<<<< HEAD
 glados
 deploy.sh
 upload.sh
+=======
+megalinter-reports/
+>>>>>>> cdd07fc1ca8172751d37cdb9efceea4b076d1892
