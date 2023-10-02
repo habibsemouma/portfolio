@@ -32,9 +32,11 @@
   async function send_embed_data(){
     try{
       let data= new FormData()
-    data.append("text",text)
-    data.append("image",embed_image)
+    
+    data.append("image",embed_image[0])
     data.append("type","embed")
+    data.append("text",text)
+    console.log(data)
     response= await axios.post('/api/stenhide',data,{headers:{"Content-Type": "multipart/form-data"}})
 
     }
@@ -48,12 +50,11 @@
   async function send_extract_data(){
     try{
        let data= new FormData()
-       console.log(data)
     data.append("text",text)
     data.append("image",extract_image)
     data.append("type","extract")
     console.log(data)
-    response= await axios.post('/api/stenhide',data,{headers:{"Content-Type": "multipart/form-data"}})
+    let response= await axios.post('/api/stenhide',data,{headers:{"Content-Type": "multipart/form-data;"}})
 
     }
     catch (error){
