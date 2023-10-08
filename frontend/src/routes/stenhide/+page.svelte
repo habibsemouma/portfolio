@@ -54,7 +54,7 @@
     data.append("image",extract_image)
     data.append("type","extract")
     console.log(data)
-    let response= await axios.post('/api/stenhide',data,{headers:{"Content-Type": "multipart/form-data;"}})
+    let response= await axios.post('/retrocrypto_api/stenhide',data,{headers:{"Content-Type": "multipart/form-data;"}})
 
     }
     catch (error){

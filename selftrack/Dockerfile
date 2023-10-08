@@ -8,7 +8,4 @@ COPY . ./
 RUN pip install -r requirements.txt
 
 
-EXPOSE 7000
-
-
-CMD ["gunicorn", "-w","4","-b","0.0.0.0:7000","wsgi:app"]
+CMD ["gunicorn", "-w","4","-b","0.0.0.0:80","wsgi:app"]

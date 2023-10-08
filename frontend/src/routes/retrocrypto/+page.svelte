@@ -11,7 +11,7 @@
   
       async function send_data(data){
         try{
-          const response = await axios.post("/api/retrocrypto",data)
+          const response = await axios.post("/traditional",data)
           console.log(response)
   
           output_text=response.data['transit_data']['text']

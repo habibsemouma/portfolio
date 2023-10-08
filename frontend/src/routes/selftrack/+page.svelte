@@ -65,7 +65,7 @@
 
   onMount(async () => {
     try {
-    const response = await axios.get("/api/selftrack");
+    const response = await axios.get("/exporter");
     const {
         activity,
         activity_by_app,

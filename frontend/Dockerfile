@@ -11,7 +11,7 @@ RUN npm ci --omit=dev && \
 
 FROM node:20-alpine3.18
 ENV NODE_ENV production
-ENV PORT=5000
+ENV PORT=80
 
 USER node
 WORKDIR /usr/src/app

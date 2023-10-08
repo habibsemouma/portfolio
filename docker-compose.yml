@@ -4,28 +4,22 @@ services:
   frontend:
     build:
       context: ./frontend
-    ports:
-      - "5000:5000"
     networks:
       net:
         ipv4_address: 193.168.1.20
 
-  retrocrypto:
+  retrocrypto_api:
     build:
       context: ./retrocrypto
-    ports:
-      - "4000:4000"
     networks:
       net:
         ipv4_address: 193.168.1.30
     volumes:
       - ./ssl:/etc/ssl
 
-  selftrack:
+  selftrack_api:
     build:
       context: ./selftrack
-    ports:
-      - "7000:7000"
     networks:
       net:
         ipv4_address: 193.168.1.40
@@ -46,9 +40,14 @@ services:
     networks:
       net:
         ipv4_address: 193.168.1.10
+    depends_on:
+      - frontend
+      - retrocrypto_api
+      - selftrack_api
 
 networks:
   net:
     ipam:
       config:
         - subnet: 193.168.1.0/24
+      

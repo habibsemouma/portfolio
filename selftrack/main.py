@@ -1,5 +1,5 @@
 from utils.app import *
-
+from apscheduler.triggers.cron import CronTrigger
 
 @app.route("/exporter", methods=["GET"])
 def exporter():
@@ -24,4 +24,4 @@ scheduler.add_job(
 scheduler.start()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=7000)
+    app.run()
