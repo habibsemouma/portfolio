@@ -70,7 +70,7 @@
         activity,
         activity_by_app,
         check_count,
-    } = response.data["transit_data"];
+    } = response.data;
 
     activity_options = get_activity_options(activity);
     days = Object.keys(activity);

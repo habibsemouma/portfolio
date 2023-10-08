@@ -14,7 +14,7 @@
           const response = await axios.post("/traditional",data)
           console.log(response)
   
-          output_text=response.data['transit_data']['text']
+          output_text=response.data['text']
         }
         catch (error){
           console.log(error)

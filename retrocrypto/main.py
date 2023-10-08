@@ -4,6 +4,7 @@ from utils import *
 from werkzeug.utils import secure_filename
 import io
 
+
 app = Flask(__name__)
 CORS(app, origins="*")
 
@@ -43,24 +44,26 @@ def get_items():
 
     return jsonify(response)
 
-app.route("/stenhide",methods=["POST"])
-def stendhide():
-    data = request.json
+@app.route("/stenhide",methods=["POST"])
+def stenhide():
+    data = request.form
     img=request.files['image']
-    if img and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-            
+    img=Image.open(io.BytesIO(img.read()))
+    if img and allowed_file(img.filename):
+        filename = secure_filename(img.filename)
     if data["type"] == "embed":
-        plaintext=data["plaintext"]
+        plaintext=data["text"]
         mod_img=embed_text(plaintext,img)
         img_buffer=io.BytesIO()
-        img.save(img_buffer,format="png")
+        img_bytes=mod_img.tobytes()
+        img_buffer.write(img_bytes)
         img_buffer.seek(0)
-        return send_file(img_buffer,mimetype="image/png")
+        return send_file(img_buffer,mimetype="image/png",as_attachment=True,download_name="payload.png")
 
     elif data["type"]=="extract":
         pass
+
     
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

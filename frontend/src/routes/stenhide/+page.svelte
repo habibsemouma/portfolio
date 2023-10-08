@@ -4,7 +4,7 @@
 
   let backgroundImage = null;
   let file_loaded = false;
-  let text,embed_image,extract_image
+  let text, embed_image, extract_image;
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -28,39 +28,61 @@
     }
   }
 
+  async function send_embed_data() {
+    try {
+      let formData = new FormData();
 
-  async function send_embed_data(){
-    try{
-      let data= new FormData()
-    
-    data.append("image",embed_image[0])
-    data.append("type","embed")
-    data.append("text",text)
-    console.log(data)
-    response= await axios.post('/api/stenhide',data,{headers:{"Content-Type": "multipart/form-data"}})
+      formData.append("image", embed_image[0]);
+      formData.append("type", "embed");
+      formData.append("text", text);
+      let response = await axios.post(
+        "http://127.0.0.1:5000/stenhide",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const blob = new Blob([response.data], {
+        type: "image/*",
+      });
+      console.log(embed_image[0])
+      console.log(response)
 
+
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+
+      link.download = "payload.png";
+
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+
+      window.URL.revokeObjectURL(blobUrl);
+
+      document.body.removeChild(link);
+    } catch (error) {
+      console.log(error);
     }
-    catch (error){
-      console.log(error)
-    }
-
   }
 
-
-  async function send_extract_data(){
-    try{
-       let data= new FormData()
-    data.append("text",text)
-    data.append("image",extract_image)
-    data.append("type","extract")
-    console.log(data)
-    let response= await axios.post('/retrocrypto_api/stenhide',data,{headers:{"Content-Type": "multipart/form-data;"}})
-
+  async function send_extract_data() {
+    try {
+      let data = new FormData();
+      data.append("text", text);
+      data.append("image", extract_image);
+      data.append("type", "extract");
+      console.log(data);
+      let response = await axios.post("http://localhost:5000/stenhide", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (error) {
+      console.log(error);
     }
-    catch (error){
-      console.log(error)
-    }
-
   }
 </script>
 
@@ -69,8 +91,7 @@
 />
 
 <div id="main-wrap">
-
-  <h1 >Upload an image and add a text to embed into the image</h1>
+  <h1>Upload an image and add a text to embed into the image</h1>
 
   <div
     role="button"
@@ -80,45 +101,60 @@
     on:dragover={(e) => e.preventDefault()}
     on:dragleave={() => {}}
     on:drop={handleDrop}
-    tabindex="0">
+    tabindex="0"
+  >
     <div style="display: {file_loaded ? 'none' : 'block'};">
       <p>Drag and drop an image here or use button to browse</p>
-      <input bind:files={embed_image} type="file" accept="image/*" on:change={handleFileInput} />
+      <input
+        bind:files={embed_image}
+        type="file"
+        accept="image/*"
+        on:change={handleFileInput}
+      />
     </div>
   </div>
 
-<input bind:value={text} placeholder="text to embed" class="txtarea" type="text">
+  <input
+    bind:value={text}
+    placeholder="text to embed"
+    class="txtarea"
+    type="text"
+  />
 
-<button on:click={send_embed_data} class="databtn">Embed text</button>
+  <button on:click={send_embed_data} class="databtn">Embed text</button>
 
-<div id="line"></div>
+  <div id="line" />
 
-<h1>Upload an image to extract text from it</h1>
+  <h1>Upload an image to extract text from it</h1>
 
+  <div
+    role="button"
+    aria-label="Image dropzone"
+    class="dropzone"
+    style="background-image: {backgroundImage};background-position:center;background-origin:content-box"
+    on:dragover={(e) => e.preventDefault()}
+    on:dragleave={() => {}}
+    on:drop={handleDrop}
+    tabindex="0"
+  >
+    <div style="display: {file_loaded ? 'none' : 'block'};">
+      <p>Drag and drop an image here or click to browse</p>
+      <input
+        bind:files={extract_image}
+        type="file"
+        accept="image/*"
+        on:change={handleFileInput}
+      />
+    </div>
+  </div>
 
-<div
-role="button"
-aria-label="Image dropzone"
-class="dropzone"
-style="background-image: {backgroundImage};background-position:center;background-origin:content-box"
-on:dragover={(e) => e.preventDefault()}
-on:dragleave={() => {}}
-on:drop={handleDrop}
-tabindex="0">
-<div style="display: {file_loaded ? 'none' : 'block'};">
-  <p>Drag and drop an image here or click to browse</p>
-  <input bind:files={extract_image} type="file" accept="image/*" on:change={handleFileInput} />
-</div>
-</div>
+  <input readonly placeholder="Extracted text" class="txtarea" type="text" />
 
-<input readonly placeholder="Extracted text" class="txtarea" type="text">
-
-<button on:click={send_extract_data} class="databtn">extract text</button>
-
+  <button on:click={send_extract_data} class="databtn">extract text</button>
 </div>
 
 <style>
-  h1{
+  h1 {
     color: white;
   }
   #main-wrap {
@@ -135,36 +171,34 @@ tabindex="0">
     cursor: pointer;
     width: 200px;
     height: 200px;
-    color:white;
-    box-shadow: 1px -1px 14px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: 1px -1px 14px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 1px -1px 14px 0px rgba(0,0,0,0.75);
+    color: white;
+    box-shadow: 1px -1px 14px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 1px -1px 14px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px -1px 14px 0px rgba(0, 0, 0, 0.75);
   }
-  .txtarea{
-    background-color: #24292E;
+  .txtarea {
+    background-color: #24292e;
     border: none;
     border-bottom: 1px solid orangered;
-    color:white;
+    color: white;
     font-size: 20px;
     text-align: center;
-
   }
-  .txtarea:focus{
+  .txtarea:focus {
     outline: none;
   }
-  #line{
+  #line {
     border-bottom: 1px solid green;
-    margin-top:10px; 
+    margin-top: 10px;
     margin-bottom: 10px;
     width: 75%;
-
   }
-  .databtn{
+  .databtn {
     font-size: 16px;
     color: white;
     font-weight: bold;
     border-radius: 20px;
-    padding:10px;
+    padding: 10px;
     background-color: orangered;
     border: none;
     cursor: pointer;
