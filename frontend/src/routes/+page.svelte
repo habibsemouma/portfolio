@@ -179,10 +179,10 @@
     <div ><img src="navbaricons/selftrack.png" alt="dummy"></div>
     <div class="col-span-3">Real time tracking of smartphone screentime using a data pipeline that updates every set period.</div>
 </div></a>
-<div class="grid grid-cols-4 grid-rows-1 gap-4 w-full shadow-[rgba(107,_33,_168,_0.24)_-2px_3px_20px] p-8">
-  <div ><img src="navbaricons/retrocrypto.png" alt="dummy"></div>
-  <div class="col-span-3">do stuff</div>
-</div>
+<a class="w-full hover:-translate-y-2 transition-all" href="/stenhide"><div class="grid grid-cols-4 grid-rows-1 gap-4 w-full shadow-[rgba(107,_33,_168,_0.24)_-2px_3px_20px] p-8">
+  <div ><img src="navbaricons/stenhide.png" alt="dummy"></div>
+  <div class="col-span-3">Hide undetectable messages inside images or extract them using an Five modulus method algorithm </div>
+</div></a>
   </div>
 
   <div

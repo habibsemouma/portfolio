@@ -40,7 +40,7 @@
       formData.append("type", "embed");
       formData.append("text", text);
       let response = await axios.post(
-        "http://127.0.0.1:5000/stenhide",
+        "/stenhide",
         formData,
         {
           responseType: "blob",
@@ -70,7 +70,7 @@
       let data = new FormData();
       data.append("image", extract_image[0]);
       data.append("type", "extract");
-      let response = await axios.post("http://localhost:5000/stenhide", data, {
+      let response = await axios.post("stenhide", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       extract_text=response.data['plaintext']

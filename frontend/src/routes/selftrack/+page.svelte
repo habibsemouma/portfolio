@@ -10,7 +10,7 @@
   let days = null;
   let data_loaded = false;
 
-  let activity = {};
+  let activity={};
   let activity_chart;
   let activity_options;
 
@@ -38,6 +38,7 @@
   }
 
   function specific_day(event) {
+    console.log(activity)
     let value_update = event.target.value;
     let new_data = [
       {
@@ -49,11 +50,11 @@
   }
 
   function batch_days(event) {
+   
     let value_update = parseInt(event.target.value);
     let new_data = [];
 
     let dates = last_n_dates(days, value_update);
-
     dates.forEach((day) => {
       new_data.push({
         data: activity[day]["duration"],
@@ -66,12 +67,12 @@
   onMount(async () => {
     try {
     const response = await axios.get("/exporter");
+    activity=response.data['activity']
     const {
-        activity,
+        dull,
         activity_by_app,
         check_count,
     } = response.data;
-
     activity_options = get_activity_options(activity);
     days = Object.keys(activity);
     activity_by_app_options = get_activity_app_options(activity_by_app);
