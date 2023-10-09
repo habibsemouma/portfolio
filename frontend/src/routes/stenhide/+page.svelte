@@ -1,10 +1,13 @@
 <script>
   import { Body } from "svelte-body";
   import axios from "axios";
+  import {SpinLine} from "svelte-loading-spinners"
 
-  let backgroundImage = null;
-  let file_loaded = false;
-  let text, embed_image, extract_image;
+  let backgroundImage_1,backgroundImage_2;
+  let file_loaded_1 = false;
+  let file_loaded_2 = false;
+  let text, embed_image, extract_image,extract_text;
+  let file_loading=false
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -15,20 +18,21 @@
   const handleFileInput = (event) => {
     const file = event.target.files[0];
     displayImage(file);
-    file_loaded = true;
+    file_loaded_1 = true;
   };
 
   function displayImage(file) {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        backgroundImage = `url(${e.target.result})`;
+        backgroundImage_1 = `url(${e.target.result})`;
       };
       reader.readAsDataURL(file);
     }
   }
 
   async function send_embed_data() {
+    file_loading=true
     try {
       let formData = new FormData();
 
@@ -39,50 +43,41 @@
         "http://127.0.0.1:5000/stenhide",
         formData,
         {
+          responseType: "blob",
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      const blob = new Blob([response.data], {
-        type: "image/*",
-      });
-      console.log(embed_image[0])
-      console.log(response)
+      console.log(response.data);
 
-
-      const blobUrl = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = blobUrl;
-
-      link.download = "payload.png";
-
-      link.style.display = "none";
-      document.body.appendChild(link);
-      link.click();
-
-      window.URL.revokeObjectURL(blobUrl);
-
-      document.body.removeChild(link);
+      let blob = response.data;
+      let blobUrl = URL.createObjectURL(blob);
+      let downloadLink = document.createElement("a");
+      downloadLink.href = blobUrl;
+      downloadLink.download = "payloaded.png";
+      downloadLink.click();
+      URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.log(error);
     }
+    file_loading=false
   }
 
   async function send_extract_data() {
+    file_loading=true
     try {
       let data = new FormData();
-      data.append("text", text);
-      data.append("image", extract_image);
+      data.append("image", extract_image[0]);
       data.append("type", "extract");
-      console.log(data);
       let response = await axios.post("http://localhost:5000/stenhide", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      extract_text=response.data['plaintext']
     } catch (error) {
       console.log(error);
     }
+    file_loading=false
   }
 </script>
 
@@ -97,13 +92,13 @@
     role="button"
     aria-label="Image dropzone"
     class="dropzone"
-    style="background-image: {backgroundImage};background-position:center;background-origin:content-box"
+    style="background-image: {backgroundImage_1};background-position:center;background-origin:content-box"
     on:dragover={(e) => e.preventDefault()}
     on:dragleave={() => {}}
     on:drop={handleDrop}
     tabindex="0"
   >
-    <div style="display: {file_loaded ? 'none' : 'block'};">
+    <div style="display: {file_loaded_1 ? 'none' : 'block'};">
       <p>Drag and drop an image here or use button to browse</p>
       <input
         bind:files={embed_image}
@@ -124,6 +119,9 @@
   <button on:click={send_embed_data} class="databtn">Embed text</button>
 
   <div id="line" />
+  {#if file_loading}
+  <SpinLine />
+  {/if}
 
   <h1>Upload an image to extract text from it</h1>
 
@@ -131,13 +129,13 @@
     role="button"
     aria-label="Image dropzone"
     class="dropzone"
-    style="background-image: {backgroundImage};background-position:center;background-origin:content-box"
+    style="background-image: {backgroundImage_2};background-position:center;background-origin:content-box"
     on:dragover={(e) => e.preventDefault()}
     on:dragleave={() => {}}
     on:drop={handleDrop}
     tabindex="0"
   >
-    <div style="display: {file_loaded ? 'none' : 'block'};">
+    <div style="display: {file_loaded_2 ? 'none' : 'block'};">
       <p>Drag and drop an image here or click to browse</p>
       <input
         bind:files={extract_image}
@@ -148,9 +146,10 @@
     </div>
   </div>
 
-  <input readonly placeholder="Extracted text" class="txtarea" type="text" />
 
   <button on:click={send_extract_data} class="databtn">extract text</button>
+  <input readonly bind:value={extract_text} placeholder="Extracted text" class="txtarea" type="text" />
+
 </div>
 
 <style>

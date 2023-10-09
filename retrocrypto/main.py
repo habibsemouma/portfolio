@@ -3,6 +3,7 @@ from flask_cors import CORS
 from utils import *
 from werkzeug.utils import secure_filename
 import io
+import base64
 
 
 app = Flask(__name__)
@@ -55,15 +56,14 @@ def stenhide():
         plaintext=data["text"]
         mod_img=embed_text(plaintext,img)
         img_buffer=io.BytesIO()
-        img_bytes=mod_img.tobytes()
-        img_buffer.write(img_bytes)
+        mod_img.save(img_buffer,format="PNG")
         img_buffer.seek(0)
-        return send_file(img_buffer,mimetype="image/png",as_attachment=True,download_name="payload.png")
+        return send_file(img_buffer,mimetype="image/png")
 
     elif data["type"]=="extract":
-        pass
+        return jsonify({'plaintext':extract_text(img)})
 
     
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

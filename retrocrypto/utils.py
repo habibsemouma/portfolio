@@ -136,7 +136,6 @@ def embed_text(plaintext,img):
     processed_img=process_image(img)
     org_dimensions,filling,windows=get_windows(processed_img)
     
-    plaintext='i love cheese'
     if len(windows)<(len(plaintext)-filling):
         raise Exception('Image too small or text too short')
     for letter,window in zip(plaintext,windows):
@@ -154,7 +153,8 @@ def extract_text(img):
     for window in windows:
         for value in window:
             if value%5!=0:
-                plaintext+=secret_table_reverse[value]
+                try:plaintext+=secret_table_reverse[value]
+                except:pass
                 break
     return(plaintext)
 
